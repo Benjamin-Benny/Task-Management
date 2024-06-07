@@ -1,0 +1,70 @@
+# Compiled class files
+target/
+build/
+
+# Maven
+.mvn/
+!**/src/main/**/maven-wrapper.jar
+
+# Gradle
+.gradle/
+build/
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+/*.iml
+*.iws
+
+# Logs
+logs/
+*.log
+*.log.*
+/log
+
+# Environment files
+.env
+*.env
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Dependencies
+/lib/
+/node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*~
+
+# Spring Boot specific
+spring.log
+
+# Coverages
+.coverage
+/.coverage
+
+# Database
+*.db
+*.sql
+*.sqlite
+
+# Misc
+*.bak
+*.tmp
