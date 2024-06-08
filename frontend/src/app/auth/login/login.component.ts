@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class LoginComponent implements OnInit {
   model: any = {};
-  returnUrl: string;
+  returnUrl: string | undefined;
 
   constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router) { }
 

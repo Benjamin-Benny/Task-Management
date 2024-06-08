@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 
 export class TaskListComponent implements OnInit {
-  tasks: Task[];
+  tasks: Task[] = [];
 
   constructor(private taskService: TaskService, private router: Router) { }
 

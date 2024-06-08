@@ -13,7 +13,7 @@ import { Task } from '../../models/task';
 
 export class TaskFormComponent implements OnInit {
   task: Task = new Task();
-  id: number;
+  id: number | undefined;
 
   constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router) { }
 

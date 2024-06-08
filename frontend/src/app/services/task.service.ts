@@ -14,6 +14,10 @@ export class TaskService {
     return this.http.get<Task[]>('/api/tasks');
   }
 
+  getTask(id: number): Observable<Task> {
+    return this.http.get<Task>('/api/tasks/'+id);
+  }
+
   addTask(task: Task): Observable<Task> {
     return this.http.post<Task>('/api/tasks', task);
   }
