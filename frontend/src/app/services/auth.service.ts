@@ -12,7 +12,9 @@ export class AuthService {
   public currentUser: Observable<any>;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
+    let cUser: string | null = localStorage.getItem('currentUser');
+    cUser = cUser == null? "": cUser;
+    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(cUser));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -20,11 +22,11 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  register(user): Observable<any> {
+  register(user: any): Observable<any> {
     return this.http.post<any>('/api/auth/register', user);
   }
 
-  login(credentials): Observable<any> {
+  login(credentials: any): Observable<any> {
     return this.http.post<any>('/api/auth/login', credentials)
       .pipe(map(user => {
         localStorage.setItem('currentUser', JSON.stringify(user));

@@ -8,13 +8,13 @@ import { TaskListComponent } from './task/task-list/task-list.component';
 import { TaskFormComponent } from './task/task-form/task-form.component';
 import { AuthGuard } from './guards/auth.guard';
 
-export const routes: Routes = [
+const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'tasks', component: TaskListComponent, canActivate: [AuthGuard] },
   { path: 'task/new', component: TaskFormComponent, canActivate: [AuthGuard] },
   { path: 'task/edit/:id', component: TaskFormComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'tasks' }
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

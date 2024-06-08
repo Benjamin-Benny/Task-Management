@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
-  standalone: true,
-  imports: [],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })

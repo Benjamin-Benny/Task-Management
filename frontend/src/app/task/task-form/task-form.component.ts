@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-task-form',
-  standalone: true,
-  imports: [],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.css']
 })
