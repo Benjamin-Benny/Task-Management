@@ -7,6 +7,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { TaskListComponent } from './task/task-list/task-list.component';
 import { TaskFormComponent } from './task/task-form/task-form.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AppModule } from './app.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,3 +23,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+export { routes };

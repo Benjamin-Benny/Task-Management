@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -20,7 +20,6 @@ import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
-    AppComponent,
     LoginComponent,
     RegisterComponent,
     TaskListComponent,
@@ -30,7 +29,7 @@ import { AuthGuard } from './guards/auth.guard';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule,
+    RouterModule.forRoot(routes),
     AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -41,7 +40,6 @@ import { AuthGuard } from './guards/auth.guard';
   providers: [
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-  ],
-  bootstrap: [AppComponent]
+  ]
 })
 export class AppModule { }
