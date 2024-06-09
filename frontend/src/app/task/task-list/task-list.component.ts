@@ -7,6 +7,9 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
+  standalone: true,
+  imports: [CommonModule],
+  providers: [DatePipe],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
