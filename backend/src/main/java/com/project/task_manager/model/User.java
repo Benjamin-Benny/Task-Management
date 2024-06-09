@@ -1,10 +1,10 @@
 package com.project.task_manager.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Set;
 
 @Data
@@ -23,6 +23,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private Set<Role> roles;
 }
