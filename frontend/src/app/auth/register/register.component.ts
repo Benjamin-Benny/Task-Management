@@ -34,7 +34,6 @@ export class RegisterComponent {
       },
       error: (error) => {
         console.error('Registration or login failed', error);
-        // Handle error appropriately
       }
     });
   }
