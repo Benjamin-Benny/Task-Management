@@ -65,7 +65,7 @@ export class TaskListComponent implements OnInit {
   deleteTask(id: number) {
     this.taskService.deleteTask(id).subscribe(() => {
       this.tasks = this.tasks.filter(task => task.id !== id);
-      this.dataSource.data = this.tasks;  // Update the dataSource to reflect the changes
+      this.dataSource.data = this.tasks;  // Updating the dataSource to reflect the changes
     });
   }
 

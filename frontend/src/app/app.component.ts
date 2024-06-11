@@ -11,10 +11,8 @@ import { LoginComponent } from './auth/login/login.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'Task Management';
 
   ngOnInit(){
-    // const currentUserId = 1;
-    // localStorage.setItem('currentUserId', currentUserId.toString());
   }
 }
