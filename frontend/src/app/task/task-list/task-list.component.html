@@ -1,0 +1,73 @@
+<div class="header-container">
+  <h2 class="task-list-title">TaskList</h2>
+  <div class="add-new-button">
+    <button mat-flat-button color="primary" (click)="addTask()">Add new task</button>
+  </div>
+  <div class="logout-button">
+    <button mat-flat-button color="primary" (click)="logout()">Logout</button>
+  </div>
+</div>
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <span class="mobile-label">Title:</span>
+        {{task.title}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <span class="mobile-label">Description:</span>
+        {{task.description}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="dueDate">
+      <mat-header-cell *matHeaderCellDef> Due Date </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <span class="mobile-label">Due Date:</span>
+        {{task.dueDate | date: 'dd-MM-yyyy'}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Completed Column -->
+    <ng-container matColumnDef="completed">
+      <mat-header-cell *matHeaderCellDef> Completed </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <button mat-icon-button (click)="toggleComplete(task)">
+          <mat-checkbox [checked]="task.completed" (change)="toggleComplete(task)"></mat-checkbox>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <button mat-icon-button color="primary" (click)="editTask(task.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <button mat-fab color="warn" (click)="deleteTask(task.id)">
+          <mat-icon class="deleteButton">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
