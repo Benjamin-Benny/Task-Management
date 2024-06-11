@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TaskService } from '../../services/task.service';
-import { Task } from '../../models/task';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Task } from '../../models/task';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-task-form',
@@ -21,21 +23,22 @@ export class TaskFormComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
     if (this.id) {
-      this.taskService.getTask(this.id).subscribe(task => {
+      this.taskService.getTask(this.id).pipe(
+        catchError(error => {
+          console.error('Error fetching task:', error);
+          return throwError(error);
+        })
+      ).subscribe(task => {
         this.task = task;
       });
     }
   }
 
   saveTask() {
-    if (this.id) {
-      this.taskService.updateTask(this.task).subscribe(() => {
-        this.router.navigate(['/tasks']);
-      });
-    } else {
-      this.taskService.addTask(this.task).subscribe(() => {
-        this.router.navigate(['/tasks']);
-      });
-    }
+    const saveObservable = this.id ? this.taskService.updateTask(this.task) : this.taskService.addTask(this.task);
+
+    saveObservable.subscribe(() => {
+      this.router.navigate(['/tasks']);
+    });
   }
 }

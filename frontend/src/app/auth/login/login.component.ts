@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,12 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.user).subscribe(()=>{
+    this.authService.login(this.user).pipe(
+      catchError(error => {
+        console.error('Login failed:', error);
+        return throwError(error);
+      })
+    ).subscribe(() => {
       this.router.navigate(['/tasks']);
     });
   }
