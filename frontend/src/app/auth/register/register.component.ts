@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { User } from '../../models/user';
 import { AuthService } from '../../services/auth.service';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -26,6 +26,10 @@ export class RegisterComponent {
       switchMap(() => {
         console.log('Registration successful, logging in...');
         return this.authService.login(this.user);
+      }),
+      catchError((error) => {
+        console.error('Registration or login failed', error);
+        return throwError(error);
       })
     ).subscribe({
       next: () => {
@@ -33,7 +37,7 @@ export class RegisterComponent {
         this.router.navigate(['/tasks']);
       },
       error: (error) => {
-        console.error('Registration or login failed', error);
+        console.error('Navigation to tasks failed', error);
       }
     });
   }

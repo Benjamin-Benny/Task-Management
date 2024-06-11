@@ -3,14 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { AuthService } from '../../services/auth.service';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-task-list',
@@ -23,23 +24,27 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDialogModule,
     MatButtonModule,
     MatDividerModule,
-    MatCheckboxModule,
-    MatIconModule],
-  providers: [DatePipe, MatIconModule, MatButtonModule],
+    MatCheckboxModule
+  ],
+  providers: [DatePipe],
   templateUrl: './task-list.component.html',
-  styleUrl: './task-list.component.css'
+  styleUrls: ['./task-list.component.css']
 })
 
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
-
   displayedColumns = ['title', 'description', 'dueDate', 'completed', 'edit', 'delete'];
   dataSource = new MatTableDataSource<Task>(this.tasks);
 
   constructor(private taskService: TaskService, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe(response => {
+    this.taskService.getTasks().pipe(
+      catchError(error => {
+        console.error('Error fetching tasks:', error);
+        return throwError(error);
+      })
+    ).subscribe(response => {
       this.tasks = response.map(item => {
         const task = new Task();
         task.id = item.id;
@@ -48,8 +53,7 @@ export class TaskListComponent implements OnInit {
         task.dueDate = item.dueDate ? new Date(item.dueDate) : undefined;
         task.completed = item.completed;
         return task;
-      })
-      console.log(this.tasks);
+      });
       this.dataSource.data = this.tasks;
     });
   }
@@ -63,20 +67,30 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteTask(id: number) {
-    this.taskService.deleteTask(id).subscribe(() => {
+    this.taskService.deleteTask(id).pipe(
+      catchError(error => {
+        console.error('Error deleting task:', error);
+        return throwError(error);
+      })
+    ).subscribe(() => {
       this.tasks = this.tasks.filter(task => task.id !== id);
-      this.dataSource.data = this.tasks;  // Updating the dataSource to reflect the changes
+      this.dataSource.data = this.tasks;
     });
   }
 
   toggleComplete(task: Task) {
     task.completed = !task.completed;
-    this.taskService.updateTask(task).subscribe(() => {
+    this.taskService.updateTask(task).pipe(
+      catchError(error => {
+        console.error('Error updating task:', error);
+        return throwError(error);
+      })
+    ).subscribe(() => {
       this.dataSource.data = [...this.tasks];
     });
   }
 
-  logout(){
+  logout() {
     this.authService.logout();
   }
 }

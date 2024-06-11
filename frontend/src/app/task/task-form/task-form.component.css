@@ -18,3 +18,7 @@ button{
 h2{
     text-align: center;
 }
+
+textarea{
+    height: 125px;
+}

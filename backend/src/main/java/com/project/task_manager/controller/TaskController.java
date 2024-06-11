@@ -7,11 +7,12 @@ import com.project.task_manager.model.User;
 import com.project.task_manager.service.TaskService;
 import com.project.task_manager.service.UserNotFoundException;
 import com.project.task_manager.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -19,14 +20,16 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    public TaskController(TaskService taskService, UserService userService, JwtUtil jwtUtil) {
+        this.taskService = taskService;
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+    }
 
     @GetMapping
     public ResponseEntity<?> getTasks(HttpServletRequest request) {
@@ -35,7 +38,7 @@ public class TaskController {
             List<Task> tasks = taskService.findByUserId(userId);
             return ResponseEntity.ok(tasks);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error fetching tasks: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching tasks: " + e.getMessage());
         }
     }
 
@@ -49,7 +52,7 @@ public class TaskController {
             TaskDTO taskDTO = convertToDTO(task);
             return ResponseEntity.ok(taskDTO);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error fetching task: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching task: " + e.getMessage());
         }
     }
 
@@ -62,7 +65,7 @@ public class TaskController {
             Task newTask = taskService.save(task);
             return ResponseEntity.ok(newTask);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error adding task: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding task: " + e.getMessage());
         }
     }
 
@@ -80,7 +83,7 @@ public class TaskController {
             Task updatedTask = taskService.save(task);
             return ResponseEntity.ok(updatedTask);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error updating task: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating task: " + e.getMessage());
         }
     }
 
@@ -88,31 +91,25 @@ public class TaskController {
     public ResponseEntity<?> deleteTask(@PathVariable Long id) {
         try {
             Task task = taskService.findById(id);
-            if (task == null || task.getUser() == null) {
+            if (task == null) {
                 return ResponseEntity.notFound().build();
             }
             taskService.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error deleting task: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting task: " + e.getMessage());
         }
     }
 
     private Long getUserIdFromToken(HttpServletRequest request) {
         try {
             String authorizationHeader = request.getHeader("Authorization");
-            String jwt = null;
-            Long userId = null;
-
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-                jwt = authorizationHeader.substring(7);
-                userId = jwtUtil.extractUserId(jwt); // Implement this method in your JwtUtil class
+                String jwt = authorizationHeader.substring(7);
+                return jwtUtil.extractUserId(jwt); // Implement this method in your JwtUtil class
+            } else {
+                throw new UserNotFoundException("Authorization token not provided");
             }
-
-            if (userId == null) {
-                throw new UserNotFoundException("No user with that details");
-            }
-            return userId;
         } catch (Exception e) {
             throw new UserNotFoundException("Error extracting user ID from token: " + e.getMessage());
         }
