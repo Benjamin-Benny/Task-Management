@@ -4,6 +4,7 @@ import com.project.task_manager.config.JwtUtil;
 import com.project.task_manager.model.User;
 import com.project.task_manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -29,9 +30,9 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
         userService.save(user);
-        return "User registered successfully";
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
