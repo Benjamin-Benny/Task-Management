@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Task } from '../../models/task';
@@ -25,7 +25,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDividerModule,
     MatCheckboxModule,
     MatIconModule],
-  providers: [DatePipe],
+  providers: [DatePipe, MatIconModule, MatButtonModule],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })

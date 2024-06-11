@@ -1,6 +1,5 @@
 package com.project.task_manager.config;
 
-import com.project.task_manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,11 +33,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .authorizeRequests()
-                .requestMatchers("/api/login", "/api/register").permitAll()
-                .anyRequest().authenticated()
+                .authorizeRequests().
+                requestMatchers("/api/login", "/api/register")
+                .permitAll().anyRequest().authenticated()
                 .and().sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
