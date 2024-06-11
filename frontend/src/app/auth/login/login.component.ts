@@ -1,22 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../models/user';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FlexLayoutModule,FormsModule,ReactiveFormsModule, MatCardModule, MatFormFieldModule],
+  imports: [CommonModule, MatInputModule,FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 
 export class LoginComponent implements OnInit {
   model: any = {};
+  user: User = new User;
   returnUrl: string | undefined;
 
   constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router) {
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    // this.authService.login(this.model).subscribe(() => {
-      this.router.navigate([this.returnUrl]);
-    // });
+    this.authService.login(this.user).subscribe(()=>{
+      this.router.navigate(['/tasks']);
+    });
   }
 }

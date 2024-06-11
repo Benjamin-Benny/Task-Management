@@ -1,6 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files
 /* @import '~@angular/material/prebuilt-themes/indigo-pink.css'; */
-html,
+
+/* 
+
+html, 
 body {
   height: 100%;
 }
@@ -91,5 +94,4 @@ body {
   background: #FFF7FA;
 }
 .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0.8375em 0;
-}
+  padding: 0.8375em 0;  */

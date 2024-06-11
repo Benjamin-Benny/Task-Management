@@ -21,8 +21,8 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'tasks', component: TaskListComponent },
-    { path: 'task/new', component: TaskFormComponent },
-    { path: 'task/edit/:id', component: TaskFormComponent },
+    { path: 'tasks/new', component: TaskFormComponent },
+    { path: 'tasks/edit/:id', component: TaskFormComponent },
     { path: '**', redirectTo: 'login' }
 ];
 

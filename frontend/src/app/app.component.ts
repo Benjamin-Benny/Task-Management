@@ -12,4 +12,9 @@ import { LoginComponent } from './auth/login/login.component';
 })
 export class AppComponent {
   title = 'frontend';
+
+  ngOnInit(){
+    // const currentUserId = 1;
+    // localStorage.setItem('currentUserId', currentUserId.toString());
+  }
 }

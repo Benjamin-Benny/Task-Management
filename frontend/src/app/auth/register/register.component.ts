@@ -1,28 +1,28 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatOptionSelectionChange } from '@angular/material/core';
+import { User } from '../../models/user';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FlexLayoutModule,FormsModule,ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatLabel],
+  imports: [CommonModule, MatInputModule,FormsModule], 
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 
 export class RegisterComponent {
   model: any = {};
-
+  user: User = new User;
   constructor(private authService: AuthService, private router: Router) { }
 
   register() {
-    this.authService.register(this.model).subscribe(() => {
-      this.router.navigate(['/login']);
+    console.log("inside register");
+    this.authService.register(this.user).subscribe(() => {
+      this.router.navigate(['/login']); 
     });
   }
 }

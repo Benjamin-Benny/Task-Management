@@ -3,18 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+// import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
-
+  private apiUrl: String = "http://localhost:8080";
+  
   constructor(private http: HttpClient, private router: Router) {
-    // let cUser: string | null = localStorage.getItem('currentUser');
-    // cUser = cUser == null? "": cUser;
-    this.currentUserSubject = new BehaviorSubject<any>("");
+    
+    let cUser: string | null = localStorage.getItem('token');
+    cUser = cUser == null? "": cUser;
+    this.currentUserSubject = new BehaviorSubject<any>(cUser);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -23,20 +27,22 @@ export class AuthService {
   }
 
   register(user: any): Observable<any> {
-    return this.http.post<any>('/api/auth/register', user);
+    return this.http.post<any>(`${this.apiUrl}/api/register`, user);
   }
 
   login(credentials: any): Observable<any> {
-    return this.http.post<any>('/api/auth/login', credentials)
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
+      console.log("hi inside login");
+    return this.http.post<any>(`${this.apiUrl}/api/login`, credentials)
+      .pipe(map(response => {
+        const token = response.token; 
+        console.log(token);
+        localStorage.setItem('token', token); // save the token separately
+        this.currentUserSubject.next(token);
       }));
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
