@@ -33,7 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
-  displayedColumns = ['title', 'description', 'dueDate', 'completed', 'edit'];
+  displayedColumns = ['completed', 'title', 'description', 'dueDate', 'edit'];
   dataSource = new MatTableDataSource<Task>(this.tasks);
 
   constructor(private taskService: TaskService, private router: Router, private authService: AuthService) { }

@@ -40,7 +40,7 @@
 
     <!-- Completed Column -->
     <ng-container matColumnDef="completed">
-      <mat-header-cell *matHeaderCellDef> Completed </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let task">
         <button mat-icon-button (click)="toggleComplete(task)">
           <mat-checkbox [checked]="task.completed" (change)="toggleComplete(task)"></mat-checkbox>
@@ -50,12 +50,12 @@
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell *matCellDef="let task">
-        <button mat-icon-button color="primary" (click)="editTask(task.id)">
+        <button mat-icon-button class="edit-icon" (click)="editTask(task.id)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-fab color="warn" (click)="deleteTask(task.id)">
+        <button mat-icon-button class="delete-icon" (click)="deleteTask(task.id)">
           <mat-icon class="deleteButton">delete</mat-icon>
         </button>
       </mat-cell>

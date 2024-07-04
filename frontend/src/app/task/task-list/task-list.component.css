@@ -24,17 +24,18 @@
   margin: auto;
   width: 65%;
   border: 3px solid #8785A2;
-  padding: 10px;
+  padding: 0;
   padding-bottom: 20px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   min-width: 300px;
   background-color: #f6f6f6;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mat-table {
-  overflow: auto;
+  overflow: hidden;
   max-height: 500px;
 }
 
@@ -110,4 +111,16 @@ h2 {
 
 ::ng-deep .add-new-button span {
   text-decoration: underline;
+}
+
+::ng-deep .example-container .mat-mdc-header-row {
+  background-color: #8785A2;
+}
+
+.edit-icon {
+  color: #009688;
+}
+
+.delete-icon {
+  color: #c62828;
 }
