@@ -7,6 +7,7 @@
     <button mat-flat-button color="primary" (click)="logout()">Logout</button>
   </div>
 </div>
+<div class="line"></div>
 <div class="example-container mat-elevation-z8">
   <mat-table #table [dataSource]="dataSource">
 
@@ -54,10 +55,13 @@
         <button mat-icon-button color="primary" (click)="editTask(task.id)">
           <mat-icon>edit</mat-icon>
         </button>
+        <button mat-fab color="warn" (click)="deleteTask(task.id)">
+          <mat-icon class="deleteButton">delete</mat-icon>
+        </button>
       </mat-cell>
     </ng-container>
 
-    <!-- Delete Column -->
+<!--     
     <ng-container matColumnDef="delete">
       <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
       <mat-cell *matCellDef="let task">
@@ -65,9 +69,13 @@
           <mat-icon class="deleteButton">delete</mat-icon>
         </button>
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    <tr *ngIf="dataSource.data.length < 6">
+      <td mat-cell *matCellDef="let element" colspan="6">&nbsp;</td>
+    </tr>
   </mat-table>
 </div>

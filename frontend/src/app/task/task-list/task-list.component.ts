@@ -33,7 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
-  displayedColumns = ['title', 'description', 'dueDate', 'completed', 'edit', 'delete'];
+  displayedColumns = ['title', 'description', 'dueDate', 'completed', 'edit'];
   dataSource = new MatTableDataSource<Task>(this.tasks);
 
   constructor(private taskService: TaskService, private router: Router, private authService: AuthService) { }
@@ -54,6 +54,7 @@ export class TaskListComponent implements OnInit {
         task.completed = item.completed;
         return task;
       });
+      this.padTasks();
       this.dataSource.data = this.tasks;
     });
   }
@@ -74,6 +75,7 @@ export class TaskListComponent implements OnInit {
       })
     ).subscribe(() => {
       this.tasks = this.tasks.filter(task => task.id !== id);
+      this.padTasks();
       this.dataSource.data = this.tasks;
     });
   }
@@ -88,6 +90,12 @@ export class TaskListComponent implements OnInit {
     ).subscribe(() => {
       this.dataSource.data = [...this.tasks];
     });
+  }
+
+  padTasks() {
+    while (this.tasks.length < 6) {
+      this.tasks.push(new Task());
+    }
   }
 
   logout() {
